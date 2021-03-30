@@ -1,0 +1,207 @@
+{
+    "students": [
+        {
+            "id": 1,
+            "name": "David Kopis",
+            "email": "kd@gmail.com",
+            "points": 0,
+            "active": true
+        },
+        {
+            "id": 2,
+            "name": "Merse Kopis",
+            "email": "km@gmail.com",
+            "points": 0,
+            "active": true
+        },
+        {
+            "id": 3,
+            "name": "Huba Kopis",
+            "email": "kh@gmail.com",
+            "points": 0,
+            "active": true
+        }
+    ],
+    "quizzes": [
+        {
+            "id": 1,
+            "title": "T360 quiz",
+            "description": "Ebben a kvízben html, css, typescript,javascript,angular kérdések találhatóak. Jó gyakorlást!",
+            "questions": [
+                1,
+                2
+            ],
+            "active": true
+        }
+    ],
+    "questions": [
+        {
+            "id": 1,
+            "question": "Mi a különbség a for of és a for in között?<br><br>Válaszd ki az EGYETLEN megfelelő választ!'",
+            "answers": [
+                {
+                    "id": 1,
+                    "content": "a for of csak tömbökön alkalmazható, a for in csak objektumokon",
+                    "correct": false
+                },
+                {
+                    "id": 2,
+                    "content": "csak a szintaxis, mindkettő elöltesztelős ciklus, amit meg tudunk valósítani az egyikkel, azt a másikkal is",
+                    "correct": false
+                },
+                {
+                    "id": 3,
+                    "content": "A for in az enumerable property-ken iterál végig, a for of egy iterálható objektumon",
+                    "correct": true
+                },
+                {
+                    "id": 4,
+                    "content": "csak for of van, for in nem létezik",
+                    "correct": false
+                }
+            ],
+            "points": 1,
+            "active": true
+        },
+        {
+            "id": 2,
+            "question": "Mit csinál a spread operator?<br><br>Válaszd ki az EGYETLEN megfelelő választ!",
+            "answers": [
+                {
+                    "id": 1,
+                    "content": "Tömbelemek törlésére szolgál",
+                    "correct": false
+                },
+                {
+                    "id": 2,
+                    "content": "Objektumokon lehet végigiterálni a segítségével",
+                    "correct": false
+                },
+                {
+                    "id": 3,
+                    "content": "Egy iterálható elemet bont ki",
+                    "correct": true
+                },
+                {
+                    "id": 4,
+                    "content": "Egy generátorfüggvényt készíthetünk a segítségével",
+                    "correct": false
+                }
+            ],
+            "points": 1,
+            "active": true
+        },
+        {
+            "id": 1,
+            "question": "Melyik szelektor választja ki ezt az elemet?<br><br>&emsp; < p id=page-lead > < / p > <br><br>Válaszd ki az EGYETLEN megfelelő választ!",
+            "answers": [
+                {
+                    "id": 1,
+                    "content": ".page-lead",
+                    "correct": false
+                },
+                {
+                    "id": 2,
+                    "content": "#page-lead",
+                    "correct": true
+                },
+                {
+                    "id": 3,
+                    "content": "&page-lead",
+                    "correct": false
+                },
+                {
+                    "id": 4,
+                    "content": "@page-lead",
+                    "correct": false
+                }
+            ],
+            "points": 1,
+            "active": true
+        },
+        {
+            "id": 2,
+            "question": "Melyik html elemmel lehet megjeleníteni ordered list-et?<br><br>Válaszd ki az EGYETLEN megfelelő választ!",
+            "answers": [
+                {
+                    "id": 1,
+                    "content": "al",
+                    "correct": false
+                },
+                {
+                    "id": 2,
+                    "content": "ol",
+                    "correct": true
+                },
+                {
+                    "id": 3,
+                    "content": "el",
+                    "correct": false
+                },
+                {
+                    "id": 4,
+                    "content": "ul",
+                    "correct": false
+                }
+            ],
+            "points": 1,
+            "active": true
+        },
+        {
+            "id": 1,
+            "question": "Mi a next() metódus visszatérési értéke?<br><br>Válaszd ki az EGYETLEN megfelelő választ!",
+            "answers": [
+                {
+                    "id": 1,
+                    "content": "egy value, azaz valamilyen érték",
+                    "correct": false
+                },
+                {
+                    "id": 2,
+                    "content": "egy boolean, ami true, ha a függvény befejezett, egyébként false",
+                    "correct": false
+                },
+                {
+                    "id": 3,
+                    "content": "egy object, ami done és value tulajdonságokat tartalmaz",
+                    "correct": true
+                },
+                {
+                    "id": 4,
+                    "content": "egy Promise",
+                    "correct": false
+                }
+            ],
+            "points": 1,
+            "active": true
+        },
+        {
+            "id": 2,
+            "question": "Az alábbi minta melyik stringre fog illeszkedni?<br><br>&emsp; /^(\\d{3} ){2}\\d{3}$/<br><br>Válaszd ki az EGYETLEN megfelelő választ!",
+            "answers": [
+                {
+                    "id": 1,
+                    "content": "111 222 333",
+                    "correct": true
+                },
+                {
+                    "id": 2,
+                    "content": "111 222 333",
+                    "correct": false
+                },
+                {
+                    "id": 3,
+                    "content": "ABC BCD CDE",
+                    "correct": false
+                },
+                {
+                    "id": 4,
+                    "content": "111222333",
+                    "correct": false
+                }
+            ],
+            "points": 1,
+            "active": true
+        }
+    ]
+}
