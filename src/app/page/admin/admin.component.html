@@ -1,1 +1,57 @@
-<p>admin works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10 offset-md-1 my-4 text-center">
+            <h2>Admin oldal</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input col-4 mx-auto">
+            <form class="form-inline my-3">
+                <input (keyup)="onChangePhrase($event)" class="form-control mr-sm-2" type="text" placeholder="Keresés">
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 offset-md-1 my-4 text-center">
+            <button class="btn btn-block btn-success" routerLink="/question/ + 0">
+                Új quiz létrehozása
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th (click)="onSort('id')">#</th>
+                        <th (click)="onSort('title')">Cím</th>
+                        <th (click)="onSort('description')">Leírás</th>
+                        <th (click)="onSort('questions')">Kérdések</th>
+                        <th (click)="onSort('active')">Aktív</th>
+                        <th>Gombok</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        *ngFor="let quiz of quizList$ | async | filter:filterKey:phrase | sorter:sorterKey:sorterDirection">
+                        <td>{{ quiz.id }}</td>
+                        <td>{{ quiz.title }}</td>
+                        <td>{{ quiz.description }}</td>
+                        <td>{{ quiz.questions }}</td>
+                        <td>{{ quiz.active }}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-primary" routerLink="/quiz/ + quiz.id">
+                                    Update
+                                </button>
+                                <button (click)="onRemove(quiz)" class="btn btn-danger">
+                                    Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

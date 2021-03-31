@@ -9,7 +9,7 @@ import { Quiz } from '../model/quiz';
 export class QuizService {
 
   apiUrl: string = 'http://localhost:3000/quizzes';
-  list$: BehaviorSubject<Quiz[]> | undefined;
+  list$: BehaviorSubject<Quiz[]> = new BehaviorSubject<Quiz[]>([]);
 
   constructor(private http: HttpClient) { }
 
