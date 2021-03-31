@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Quiz } from '../model/quiz';
+import { ConfigServiceService } from './config-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class QuizService {
   apiUrl: string = 'http://localhost:3000/quizzes';
   list$: BehaviorSubject<Quiz[]> = new BehaviorSubject<Quiz[]>([]);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    public config: ConfigServiceService) { }
 
   getAll(): Observable<Quiz[]> {
     return this.http.get<Quiz[]>(`${this.apiUrl}`);
