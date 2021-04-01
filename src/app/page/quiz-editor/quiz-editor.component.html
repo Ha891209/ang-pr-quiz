@@ -2,10 +2,15 @@
     <div class="container-fluid">
         <div class="row">
             <div *ngIf="quiz" class="col-6 offset-3 bg-light">
-                <button [routerLink]="'/admin'" class="btn btn-info btn-block btn-lg mt-3">
-                    <i class="fa fa-arrow-circle-left"></i>
+                <button [routerLink]="['/admin']" class="btn btn-info btn-block btn-lg mt-3"
+                    style="background-color: #0f070f;">
+                    <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
                 </button>
-                <h1 class="h2 text-center text-primary pt-3">{{ title }}</h1>
+                <button [routerLink]="['/question-editor/' + quiz.questions.join(',')]"
+                    class="btn btn-info btn-block btn-lg mt-3" style="background-color: #0f070f;">
+                    New Question
+                </button>
+                <h1 class="h2 text-center text-primary pt-3"></h1>
                 <label class="mt-3">{{'#'+ quiz.id}}</label>
                 <form #quizForm="ngForm" (ngSubmit)="onUpdate(quizForm, quiz)">
                     <div class="form-group my-3">
@@ -13,7 +18,7 @@
                         <input name="title" [(ngModel)]="quiz.title" type="text" class="form-control" required>
                         <div [hidden]="quizForm.controls.title?.valid || quizForm.controls.title?.pristine"
                             class="error-message">
-                            Requied
+                            Required
                         </div>
                     </div>
                     <div class="form-group my-3">
@@ -22,7 +27,7 @@
                             required>
                         <div [hidden]="quizForm.controls.description?.valid || quizForm.controls.description?.pristine"
                             class="error-message">
-                            Requied
+                            Required
                         </div>
                     </div>
                     <div class="form-group my-3">
@@ -32,6 +37,8 @@
                             <label class="custom-control-label" for="active">Active</label>
                         </div>
                     </div>
+
+
                     <button [disabled]="quizForm.invalid" type="submit" class="btn btn-primary btn-block btn-lg mt-5">
                         <i class="fa fa-save"></i>
                     </button>

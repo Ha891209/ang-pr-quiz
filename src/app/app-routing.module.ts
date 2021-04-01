@@ -20,16 +20,16 @@ const routes: Routes = [
     component: QuizComponent,
   },
   {
-    path: 'quiz/:id',
+    path: 'quiz-editor/:id',
     component: QuizEditorComponent,
   },
   {
-    path: 'question/:id',
+    path: 'question-editor/:id',
     component: QuestionEditorComponent,
   },
   {
     path: '**',
-    redirectTo: '',
+    component: HomeComponent
   },
 ];
 

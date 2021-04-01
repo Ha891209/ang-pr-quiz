@@ -36,17 +36,14 @@ export class QuizEditorComponent implements OnInit {
 
   onUpdate(form: NgForm, item: Quiz): void {
 
-    //try {
+
     if (item.id == 0) {
       this.quizSrv.create(item);
-      //this.toastr.warning('Sikeresen hozzáadásra került');
       this.router.navigate(['/admin']);
     }
     else {
       this.quizSrv.update(item);
-      /// this.toastr.success('Sikeres módosítás :)');
       this.router.navigate(['/admin']);
     }
   }
-
 }
