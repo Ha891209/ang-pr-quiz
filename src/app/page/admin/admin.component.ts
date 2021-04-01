@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Quiz } from 'src/app/model/quiz';
 import { QuizService } from 'src/app/service/quiz-service.service';
 
@@ -10,43 +10,25 @@ import { QuizService } from 'src/app/service/quiz-service.service';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
-  quizList$: BehaviorSubject<Quiz[]> = this.quizService.list$;
 
-  phrase: string = '';
-  filterKey: string = 'title';
-  sorterKey: string = '';
-  sorterDirection: number = 1;
+  constructor(private quizSrv: QuizService) { }
+  phrase: string = "";
+  currentCol: string = "";
 
-  constructor(
-    private quizService: QuizService,
-    private router: Router,
-  ) { }
+
+  quizzes$: Observable<Quiz[]> = this.quizSrv.getAll();
 
   ngOnInit(): void {
-    this.quizService.getAll();
+    // this.quizSrv.getAll().subscribe((items)=>console.log(items))
   }
 
-  onRemove(quiz: Quiz): void {
-    this.quizService.remove(quiz).subscribe(
-      () => {
-        this.quizService.getAll();
-        this.router.navigate(['/admin']);
-      }
-    )
+  onDelete(id: number) {
   }
-
-  onChangePhrase(event: Event): void {
+  onChangePhrase(event: Event) {
     this.phrase = (event.target as HTMLInputElement).value;
   }
 
-  onSort(key: string): void {
-    if (key === this.sorterKey) {
-      this.sorterDirection *= -1;
-    } else {
-      this.sorterDirection = 1;
-    }
-
-    this.sorterKey = key;
+  onColumnClick(columnName: string) {
+    this.currentCol = columnName;
   }
-
 }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Question } from '../model/question';
-import { ConfigServiceService } from './config-service.service';
+import { ConfigService } from './config-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class QuestionService {
 
   constructor(
     private http: HttpClient,
-    public config: ConfigServiceService) { }
+    public config: ConfigService) { }
 
   getAll(): Observable<Question[]> {
     return this.http.get<Question[]>(`${this.apiUrl}`);
