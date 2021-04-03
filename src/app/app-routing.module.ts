@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { Student } from './model/student';
 import { AdminComponent } from './page/admin/admin.component';
 import { HomeComponent } from './page/home/home.component';
 import { QuestionEditorComponent } from './page/question-editor/question-editor.component';
@@ -16,15 +17,15 @@ const routes: Routes = [
     component: AdminComponent,
   },
   {
-    path: 'quiz',
+    path: 'quiz/:id',
     component: QuizComponent,
   },
   {
-    path: 'quiz-editor/:id',
+    path: 'edit-quiz/:id',
     component: QuizEditorComponent,
   },
   {
-    path: 'question-editor/:id',
+    path: 'edit-question/:id/:qid',
     component: QuestionEditorComponent,
   },
   {
