@@ -10,6 +10,7 @@ import { QuizService } from 'src/app/service/quiz-service.service';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
+  selectedItemToDelete: Quiz = new Quiz();
 
   constructor(private quizSrv: QuizService) { }
   phrase: string = "";
@@ -22,7 +23,8 @@ export class AdminComponent implements OnInit {
     // this.quizSrv.getAll().subscribe((items)=>console.log(items))
   }
 
-  onDelete(id: number) {
+  setToDelete(item: Quiz): void {
+    this.selectedItemToDelete = item;
   }
   onChangePhrase(event: Event) {
     this.phrase = (event.target as HTMLInputElement).value;

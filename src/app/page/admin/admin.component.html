@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-12 mt-2">
         <h2></h2>
-        <button type="submit" [routerLink]="['/quiz-editor/' + 0]" class="btn btn-primary btn-block mt-5"
+        <button type="submit" [routerLink]="['/edit-quiz/' + 0]" class="btn btn-primary btn-block mt-5"
             style="background-color: #0f070f;">
             <i class="fa fa-plus"></i>
         </button>
@@ -15,6 +15,7 @@
                     <th (click)="onColumnClick('id')">#</th>
                     <th (click)="onColumnClick('title')">Title</th>
                     <th (click)="onColumnClick('description')">Description</th>
+                    <th (click)="onColumnClick('questions')">Question</th>
                     <th (click)="onColumnClick('active')">Active</th>
                     <th>Editor</th>
                 </tr>
@@ -24,18 +25,20 @@
                     <td> {{quiz.id}} </td>
                     <td> {{quiz.title}} </td>
                     <td> {{quiz.description}} </td>
-                    <td> <input type="checkbox" id="active" name="active" [(ngModel)]="quiz.active" readonly> </td>
-
-                    <div class="btn-group">
-                        <button [routerLink]="['/quiz-editor/' + quiz.id]" class="btn btn-info">
-                            <i class="fa fa-pencil"></i>
-                        </button>
-                        <button class="btn btn-danger" (click)="onDelete(quiz.id)">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                    </div>
+                    <td> {{quiz.question}} </td>
+                    <td> {{quiz.active}} </td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-sm btn-warning" [routerLink]="'/edit-quiz/'+quiz.id">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-danger" (click)="setToDelete(quiz)"
+                                data-toggle="modal" data-target="#myModal">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
                 </tr>
+
             </tbody>
         </table>
-    </div>
-</div>

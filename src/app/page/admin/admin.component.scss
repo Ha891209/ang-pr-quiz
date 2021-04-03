@@ -1,6 +1,9 @@
-th {
+.arrow {
+    display: none;
+    &__active { display: inline-block; }
+}
+
+.th {
     cursor: pointer;
-} 
-h2 {
-    text-align: center;
+    user-select: none;
 }
