@@ -1,21 +1,20 @@
-<div class="container">
-    <div class="row">
-        <div class="col-8 offset-2 my-5">
-            <h1></h1>
-        </div>
-    </div>
+<div class="col-12 d-flex flex-wrap">
 
-    <div class="row">
-        <div class="col-sm-6 mb-4">
-            <div class="card">
-                <div class="card-body shadow d-flex flex-column justify-content-center">
-                    <h5 class="card-title">T360 quiz</h5>
-                    <p class="card-text"></p>
-                    <a routerLink="[quiz.id]" class="btn btn-primary" style="background-color: #0f070f;">Tovább
-                        kérdésekhez</a>
-                </div>
+    <div class="col-12 col-md-6 col-lg-3 py-3 quiz__card" *ngFor="let quiz of quizzes$ | async"
+        [routerLink]="'/quiz/'+quiz.id">
+        <div class="card w-100">
+            <div class="card-body">
+                <h4 class="card-title">{{ quiz.title }}</h4>
+                <p class="card-text">{{ quiz.description }}</p>
+                <p class="card-text small mt-auto text-right">{{ quiz.qnums }} kérdés</p>
             </div>
         </div>
-
-
     </div>
+
+</div>
+<div class="jumbotron">
+    <p class="m-0">Itt listázza ki az alkalmazás kártyákon a quiz-eket.<br>
+        Ezek közül tud egyet választani a tanuló, és utána azt kitölteni.<br>
+        Kattintásra a QuizComponent nyílik meg az adott Quiz-el.<br>
+        A kis kártyákon látszik a Quiz címe és rövid leírása is.</p>
+</div>
