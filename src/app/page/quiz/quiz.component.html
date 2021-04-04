@@ -1,87 +1,38 @@
-<div class="row">
-    <div *ngIf="quiz$ | async as quiz" class="col-8 offset-2 mt-3">
-        <h2 *ngIf="quiz.id==0">Új kérdéssor létrehozása</h2>
-        <h2 *ngIf="quiz.id!=0">Kérdéssor adatainak módosítása</h2>
-        <form #quizForm="ngForm" (ngSubmit)="onFormSubmit(quiz)">
-            <input name="id" type="hidden" [(ngModel)]="quiz.id">
+<div class="container d-flex flex-wrap questions hide" *ngIf="quiz$ | async as quiz">
 
-            <div class="form-group">
-                <label>cím</label>
-                <input class="form-control" type="text" name="title" pattern=".{8,40}" required
-                    [(ngModel)]="quiz.title">
-                <div [hidden]="quizForm.controls.title?.valid || quizForm.controls.title?.pristine"
-                    class="error__message">
-                    Legalább 8, de maximum 40 karakter megadása kötelező!
-                </div>
+    <div class="card col-12 p-5 hide" *ngFor="let question of questionArray" [id]="'q_'+question.id">
+        <div class="card-body w-100">
+            <h4 class="card-title">{{question.question}}</h4>
+
+            <div class="form-group ml-5 mt-5">
+                <input type="radio" [name]="'a_'+question.id" (click)="checkPoints(0)" value="0"
+                    class="form-check-input">
+                <label class="form-check-label">{{ question.answers[0].content }}</label>
+            </div>
+            <div class="form-group ml-5">
+                <input type="radio" [name]="'a_'+question.id" (click)="checkPoints(1)" value="1"
+                    class="form-check-input">
+                <label class="form-check-label">{{ question.answers[1].content }}</label>
+            </div>
+            <div class="form-group ml-5">
+                <input type="radio" [name]="'a_'+question.id" (click)="checkPoints(2)" value="2"
+                    class="form-check-input">
+                <label class="form-check-label">{{ question.answers[2].content }}</label>
             </div>
 
-            <div class="form-group">
-                <label>leírás</label>
-                <input class="form-control" type="text" name="description" pattern=".{8,100}" required
-                    [(ngModel)]="quiz.description">
-                <div [hidden]="quizForm.controls.description?.valid || quizForm.controls.description?.pristine"
-                    class="error__message">
-                    Legalább 8, de maximum 100 karakter megadása kötelező!
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>állapot</label>
-                <select [(ngModel)]="quiz.active" name="active" class="form-control">
-                    <option [ngValue]="true">aktív</option>
-                    <option [ngValue]="false">inaktív</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>kérdések</label>
-                <table class="table table-sm table-striped border">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>kérdés</th>
-                            <th>pontszám</th>
-                            <th>aktív</th>
-                            <th>
-                                <button type="button" class="btn btn-success btn-sm btn-block"
-                                    [routerLink]="'/edit-question/0/'+quiz.id">
-                                    <i class="fa fa-plus-circle"></i>
-                                </button>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let question of questionArray" [id]="'tr_'+question.id">
-                            <td>{{ question.id }}</td>
-                            <td>{{ question.question }}</td>
-                            <td>{{ question.points }}</td>
-                            <td>{{ question.active }}</td>
-                            <td class="text-center">
-                                <div class="btn-group" role="group" aria-label="">
-                                    <button type="button" class="btn btn-sm btn-warning"
-                                        [routerLink]="'/edit-question/'+question.id+'/'+quiz.id">
-                                        <i class="fa fa-pencil"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-danger" (click)="setToDelete(question)"
-                                        data-toggle="modal" data-target="#myModal">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-block mt-5" [disabled]="quizForm.invalid">
-                <i class="fa fa-save"></i>
-            </button>
-
-        </form>
+            <p class="card-text mt-5">Ezért a kérdésért {{question.points}} pontot kaphatsz.</p>
+        </div>
     </div>
+
+
+    <div class="p-5 game__over hide">
+        <h2>Gratulálok!</h2>
+        <h4>A kérdéssor végére értél.</h4>
+        <p class="p-3">Elért eredményed: <b>{{currentPoints}}</b> pont</p>
+    </div>
+
+    <button type="button" class="btn btn-primary btn-block my-3 next__button" (click)="nextPosition()">Következő
+        kérdés</button>
 </div>
 
-<div class="jumbotron py-4 col-8 offset-2 mt-5">
-    <p class="m-0">Itt lehet Quiz-t létrehozni vagy szerkeszteni.<br>
-        Erre egy űrlap szolgál, validációval.</p>
-</div>
+<div class="points">{{ currentPoints}} <small>pont</small></div>

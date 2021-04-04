@@ -6,4 +6,5 @@ export class Question {
     answers: Answer[] = new Array;
     points: number = 0;
     active: boolean = true;
+    anums?: number = 0;
 }

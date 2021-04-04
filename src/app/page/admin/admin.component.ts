@@ -20,7 +20,6 @@ export class AdminComponent implements OnInit {
   quizzes$: Observable<Quiz[]> = this.quizSrv.getAll();
 
   ngOnInit(): void {
-    // this.quizSrv.getAll().subscribe((items)=>console.log(items))
   }
 
   setToDelete(item: Quiz): void {

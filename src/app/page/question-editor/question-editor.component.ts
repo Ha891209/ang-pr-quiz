@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Answer } from 'src/app/model/answer';
 import { Question } from 'src/app/model/question';
 import { QuestionService } from 'src/app/service/question-service.service';
@@ -16,22 +17,25 @@ export class QuestionEditorComponent implements OnInit {
   quiz: number = 0;
   lastID: number = 0;
 
+  defaultAnswer: Answer[] = [
+    { "id": 1, "content": "", "correct": false },
+    { "id": 2, "content": "", "correct": false },
+    { "id": 3, "content": "", "correct": false },
+    { "id": 4, "content": "", "correct": false }
+  ];
+
   question$: Observable<Question> = this.activatedRoute.params.pipe(
     switchMap(params => {
       this.quiz = params.qid;
       if (Number(params.id) === 0) {
-        return of(new Question());
+        let newQuestion = new Question;
+        newQuestion.answers = this.defaultAnswer;
+        return of(newQuestion);
       }
       return this.questionService.get(Number(params.id));
 
     })
   );
-
-  defaultAnswer: Answer[] = [
-    { "id": 1, "content": "", "correct": false },
-    { "id": 2, "content": "", "correct": false },
-    { "id": 3, "content": "", "correct": false }
-  ];
 
   constructor(
     private questionService: QuestionService,
@@ -45,19 +49,14 @@ export class QuestionEditorComponent implements OnInit {
   onFormSubmit(question: Question): void {
     try {
       if (question.id == 0) {
-        question.answers = this.defaultAnswer;
         this.questionService.create(question).subscribe(
-          () => {
+          createdQuestion => {
             this.quizService.get(this.quiz).subscribe(
               data => {
-                this.questionService.getAll().subscribe(
-                  item => {
-                    this.lastID = item.slice(-1)[0].id;
-                    data.questions.push(this.lastID);
-                    this.quizService.update(data).subscribe(
-                      () => {
-                        this.router.navigate(['/edit-quiz/' + this.quiz]);
-                      });
+                data.questions.push(createdQuestion.id);
+                this.quizService.update(data).subscribe(
+                  () => {
+                    this.router.navigate(['/edit-quiz/' + this.quiz]);
                   });
               })
           })
@@ -72,7 +71,3 @@ export class QuestionEditorComponent implements OnInit {
   }
 
 }
-function switchMap(arg0: (params: any) => any): any {
-  throw new Error('Function not implemented.');
-}
-

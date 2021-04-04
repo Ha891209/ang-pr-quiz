@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 import { Question } from 'src/app/model/question';
 import { Quiz } from 'src/app/model/quiz';
 import { QuestionService } from 'src/app/service/question-service.service';
@@ -12,27 +13,34 @@ import { QuizService } from 'src/app/service/quiz-service.service';
   styleUrls: ['./quiz.component.scss']
 })
 export class QuizComponent implements OnInit {
-  questionIDArray: number[] = []
+
+
+  currentPoints: number = 0;
+  tempPoints: number = 0;
+  questionIDArray: number[] = [];
+  questionArrayLength: number = 0;
   questionArray: Question[] = [];
-  selectedItemToDelete: Question = new Question();
+  currentPosition: number = 0;
   quizID: number = 0;
 
   quiz$: Observable<Quiz> = this.activatedRoute.params.pipe(
     switchMap(params => {
+
       if (Number(params.id) === 0) {
         return of(new Quiz());
       }
-
       return this.quizService.get(Number(params.id)).pipe(
         tap(
           item => {
             this.quizID = params.id;
             this.questionIDArray = item.questions;
-            item.questions.forEach((element: number) => {
+            this.questionArrayLength = item.questions.length;
+            item.questions.forEach(element => {
               this.questionService.get(element).subscribe(
-                x => {
-                  this.questionArray.push(x);
+                data => {
+                  this.questionArray.push(data);
                 })
+              console.table(this.questionArray);
             })
           }
         )
@@ -41,68 +49,36 @@ export class QuizComponent implements OnInit {
     })
   );
 
+
   constructor(
     private quizService: QuizService,
     private questionService: QuestionService,
-    private router: Router,
     private activatedRoute: ActivatedRoute,
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
+
+  checkPoints(checkedA: number): void {
+    let question = this.questionArray[this.currentPosition - 1];
+    let answers = question.answers;
+    if (answers[checkedA].correct === true) this.tempPoints += question.points;
+    else this.tempPoints += 0;
   }
 
-  onFormSubmit(quiz: Quiz): void {
-    try {
-      if (quiz.id == 0) {
-        this.quizService.create(quiz).subscribe(
-          () => this.router.navigate(['/admin'])
-        );
-      }
-      else {
-        this.quizService.update(quiz).subscribe(
-          () => this.router.navigate(['/admin'])
-        );
-      }
-    } catch (error) {
-      // Hibaüzi arra az esetre, ha baj lenne az adatbázis kapcsolattal.
+  nextPosition(): void {
+    let prevID = this.questionIDArray[this.currentPosition - 1];
+    let currID = this.questionIDArray[this.currentPosition];
+    this.currentPoints = this.tempPoints;
+    if (this.currentPosition === this.questionArrayLength) {
+      document.querySelector('#q_' + prevID)?.classList.add('hide');
+      document.querySelector('.next__button')?.classList.add('hide');
+    } else {
+      document.querySelector('#q_' + prevID)?.classList.add('hide');
+      document.querySelector('#q_' + currID)?.classList.remove('hide');
+      this.currentPosition++;
     }
   }
 
-  // A kérdés törlésénél a törlés mellett a quiz questions tömbjéból is ki kell venni az érintett id-t!
-  setToDelete(item: Question): void {
-    this.selectedItemToDelete = item;
-  }
 
-  onDelete(): void {
-    let delQn: Question = this.selectedItemToDelete;
-    let filteredIDArray: number[] = [];
-    this.questionService.remove(this.selectedItemToDelete).subscribe(
-      () => {
-        // törlendő ID törlése a kérdés tömbből
-        filteredIDArray = this.questionIDArray.filter(
-          value => {
-            return value != delQn.id;
-          });
-        this.quizService.get(this.quizID).subscribe(
-          data => {
-            // kvíz kérdés tömbjének cseréje és update
-            data.questions = filteredIDArray;
-            this.quizService.update(data).subscribe(
-              () => {
-                // tábla sorának törlése
-                document.querySelector('#tr_' + delQn.id)?.remove();
-              });
-          });
-      });
-
-  }
 
 }
-
-function switchMap(arg0: (params: any) => Observable<unknown>): import("rxjs").OperatorFunction<import("@angular/router").Params, Quiz> {
-  throw new Error('Function not implemented.');
-}
-function tap(arg0: (item: any) => void): import("rxjs").OperatorFunction<Quiz, unknown> {
-  throw new Error('Function not implemented.');
-}
-
