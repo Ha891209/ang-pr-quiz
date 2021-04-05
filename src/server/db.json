@@ -29,7 +29,9 @@
             "description": "Ebben a kvízben html, css, typescript,javascript,angular kérdések találhatóak. Jó gyakorlást!",
             "questions": [
                 1,
-                2
+                2,
+                3,
+                4
             ],
             "active": true
         }
@@ -172,6 +174,7 @@
                     "correct": false
                 }
             ],
+            "anums": 0,
             "points": 1,
             "active": true
         },
@@ -200,6 +203,7 @@
                     "correct": false
                 }
             ],
+            "anums": 0,
             "points": 1,
             "active": true
         }

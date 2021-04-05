@@ -19,6 +19,11 @@
                     class="form-check-input">
                 <label class="form-check-label">{{ question.answers[2].content }}</label>
             </div>
+            <div class="form-group ml-5">
+                <input type="radio" [name]="'a_'+question.id" (click)="checkPoints(3)" value="2"
+                    class="form-check-input">
+                <label class="form-check-label">{{ question.answers[3].content }}</label>
+            </div>
 
             <p class="card-text mt-5">Ezért a kérdésért {{question.points}} pontot kaphatsz.</p>
         </div>
