@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { Question } from 'src/app/model/question';
 import { Quiz } from 'src/app/model/quiz';
@@ -14,7 +14,7 @@ import { QuizService } from 'src/app/service/quiz-service.service';
 })
 export class QuizComponent implements OnInit {
 
-
+  quizList$ = this.quizService.list$;
   currentPoints: number = 0;
   tempPoints: number = 0;
   questionIDArray: number[] = [];
@@ -22,6 +22,16 @@ export class QuizComponent implements OnInit {
   questionArray: Question[] = [];
   currentPosition: number = 0;
   quizID: number = 0;
+  quiz: Quiz = new Quiz();
+  quizQuestionsAsNumbers: number[] = [];
+  questionList$: BehaviorSubject<Question[]> = new BehaviorSubject<Question[]>([]);
+  currentQuestion$: BehaviorSubject<Question> = new BehaviorSubject<Question>(new Question());
+  numberOfQuestion: number = 1;
+  selectedAnswer: number = 0;
+  finishedQuiz: boolean = false;
+  checkedAnswer: boolean = false;
+  points: number = 0;
+  correctAnswers: number = 0;
 
   quiz$: Observable<Quiz> = this.activatedRoute.params.pipe(
     switchMap(params => {
